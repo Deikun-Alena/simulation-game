@@ -1,10 +1,12 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -12,9 +14,9 @@ import org.example.entities.Entity;
 
 public class Simulation extends Application {
     private int stepCount;
-    private static final int ROWS = 15;
-    private static final int COLS = 15;
-    private static final int CELL_SIZE = 40;
+    private static final int ROWS = 20;
+    private static final int COLS = 20;
+    private static final int CELL_SIZE = 35;
 
     //map
     @Override
@@ -42,7 +44,35 @@ public class Simulation extends Application {
             }
         }
 
-        Scene scene = new Scene(grid, Color.LIGHTGRAY);
+        Button buttonNext = new Button("Next");
+        Button buttonStart = new Button("Start");
+        Button buttonPause = new Button("Pause");
+
+        buttonNext.setStyle("-fx-font-size: 14px; -fx-padding: 5px 25px; -fx-border-color: #808000;");
+        buttonStart.setStyle("-fx-font-size: 14px; -fx-padding: 5px 25px; -fx-border-color: #808000;");
+        buttonPause.setStyle("-fx-font-size: 14px; -fx-padding: 5px 25px; -fx-border-color: #808000;");
+
+        BorderPane root = new BorderPane();
+        root.setCenter(grid);
+
+        HBox bottomPanel = new HBox();
+        bottomPanel.setAlignment(Pos.BOTTOM_CENTER);
+        bottomPanel.setSpacing(10);
+        bottomPanel.setPadding(new Insets(10));
+
+        bottomPanel.getChildren().addAll(buttonNext, buttonStart, buttonPause);
+
+        HBox.setHgrow(buttonNext, Priority.ALWAYS);
+        HBox.setHgrow(buttonStart, Priority.ALWAYS);
+        HBox.setHgrow(buttonPause, Priority.ALWAYS);
+
+        buttonNext.setMaxWidth(Double.MAX_VALUE);
+        buttonStart.setMaxWidth(Double.MAX_VALUE);
+        buttonPause.setMaxWidth(Double.MAX_VALUE);
+
+        root.setBottom(bottomPanel);
+
+        Scene scene = new Scene(root, Color.LIGHTGRAY);
         stage.sizeToScene();
         stage.setScene(scene);
         stage.setTitle("Simulation");
